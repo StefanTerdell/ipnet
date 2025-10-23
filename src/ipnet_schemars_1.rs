@@ -2,7 +2,7 @@ use crate::IpNet;
 use crate::Ipv4Net;
 use crate::Ipv6Net;
 
-use schemars::{json_schema, schema_for, JsonSchema, Schema, SchemaGenerator};
+use schemars1::{json_schema, JsonSchema, Schema, SchemaGenerator};
 use std::borrow::Cow;
 
 impl JsonSchema for Ipv4Net {
@@ -29,7 +29,7 @@ impl JsonSchema for Ipv6Net {
         "Ipv6Net".into()
     }
 
-    fn json_schema(_gen: &mut SchemaGenerator) -> Schema {
+    fn json_schema(_: &mut SchemaGenerator) -> Schema {
         json_schema!({
             "title": "IPv6 network",
             "description": "An IPv6 address with prefix length",
@@ -48,7 +48,7 @@ impl JsonSchema for IpNet {
         "IpNet".into()
     }
 
-    fn json_schema(_: &mut SchemaGenerator) -> Schema {
+    fn json_schema(gen: &mut SchemaGenerator) -> Schema {
         json_schema!({
             "title": "IP network",
             "description": "An IPv4 or IPv6 address with prefix length",
@@ -57,8 +57,8 @@ impl JsonSchema for IpNet {
                 "fd00::/32"
             ],
             "oneOf": [
-                schema_for!(Ipv4Net),
-                schema_for!(Ipv6Net)
+                gen.subschema_for::<Ipv4Net>(),
+                gen.subschema_for::<Ipv6Net>()
             ]
         })
     }
