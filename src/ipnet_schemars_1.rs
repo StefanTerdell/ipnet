@@ -2,7 +2,7 @@ use crate::IpNet;
 use crate::Ipv4Net;
 use crate::Ipv6Net;
 
-use schemars::{json_schema, schema_for, JsonSchema, Schema, SchemaGenerator};
+use schemars1::{json_schema, schema_for, JsonSchema, Schema, SchemaGenerator};
 use std::borrow::Cow;
 
 impl JsonSchema for Ipv4Net {

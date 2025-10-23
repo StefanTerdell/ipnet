@@ -15,12 +15,16 @@ edition = "2018"
 default = ["std"]
 std = []
 # Implements "schemars::JsonSchema". Also implies "serde".
-json = ["serde", "schemars"]
+json = ["schemars08"]
 ser_as_str = ["heapless"]
+serde = ["dep:serde"]
+schemars08 = ["serde", "dep:schemars08"]
+schemars1 = ["serde", "dep:schemars1"]
 
 [dependencies]
 serde = { package = "serde", version = "1", features = ["derive"], optional = true, default-features=false }
-schemars = { version = "1", optional = true }
+schemars08 = { package = "schemars", version = "0.8", optional = true }
+schemars1 = { package = "schemars", version = "1", optional = true }
 heapless = { version = "0", optional = true }
 
 [dev-dependencies]
