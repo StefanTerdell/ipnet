@@ -57,15 +57,27 @@
 //! [`IpBitAnd`]: trait.IpBitAnd.html
 //! [`IpBitOr`]: trait.IpBitOr.html
 //!
-//! # Serde support
+//! # Features
 //!
-//! This library comes with support for [serde](https://serde.rs) but
-//! it's not enabled by default. Use the `serde` [feature] to enable.
+//! These flags can be used to extend functionality using third-party
+//! dependencies or optional libraries. See the [features] reference
+//! for more information.
 //!
-//! ```toml
-//! [dependencies]
-//! ipnet = { version = "2", features = ["serde"] }
-//! ```
+//! [features]: https://doc.rust-lang.org/cargo/reference/features.html#the-features-section
+//!
+//! ## "std"
+//!
+//! Enabled by default. Disabling this feature will mandate the use of the
+//! [core] and [alloc] crates where applicable instead of [std].
+//!
+//! [core]: https://doc.rust-lang.org/core/
+//! [alloc]: https://doc.rust-lang.org/alloc/
+//! [std]: https://doc.rust-lang.org/std/
+//!
+//! ## "serde"
+//!
+//! Uses [`serde`] to implement the `Serialize` and
+//! `Deserialize` traits.
 //!
 //! For human readable formats (e.g. JSON) the `IpNet`, `Ipv4Net`, and
 //! `Ipv6Net` types will serialize to their `Display` strings.
@@ -76,7 +88,40 @@
 //! length. The `IpNet` type will serialize to an Enum with the V4 or V6
 //! variant index prepending the above string of 5 or 17 bytes.
 //!
-//! [feature]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-features-section
+//! [`serde`]: https://serde.rs
+//!
+//! ## "heapless" [^1]
+//!
+//! Uses [`heapless`] to optimize serialization performance by avoiding
+//! dynamic allocations.
+//!
+//! [`heapless`]: https://docs.rs/heapless/latest/heapless/
+//!
+//! ## "schemars08"
+//!
+//! Uses [`schemars@0.8.*`] to implement the `JsonSchema` trait.
+//!
+//! [`schemars@0.8.*`]: https://docs.rs/schemars/0.8/schemars/
+//!
+//! ## "schemars1"
+//!
+//! Uses [`schemars@1.*`] to implement the `JsonSchema` trait.
+//!
+//! [`schemars@1.*`]: https://docs.rs/schemars/1/schemars/
+//!
+//! ## Legacy features
+//!
+//! The following features are set to be removed in the next major
+//! release. Use the provided analogs instead.
+//!
+//! | Name         | Analog                   | Reason for removal                                              |
+//! | ------------ | ------------------------ | --------------------------------------------------------------- |
+//! | `json` [^1]  | `schemars08` and `serde` | Unconventional naming.                                          |
+//! | `ser_as_str` | `heapless` [^1]          | Doesn't enable the `serde` feature but does nothing on its own. |
+//! | `schemars`   | `schemars08`             | Replaced by `schemars08`.                                       |
+//!
+//! [^1]: Enabling these features will also enable the `serde` feature.
+//!
 
 #![no_std]
 
