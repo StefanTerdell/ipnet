@@ -2,8 +2,12 @@ use crate::IpNet;
 use crate::Ipv4Net;
 use crate::Ipv6Net;
 
-use schemars1::{json_schema, JsonSchema, Schema, SchemaGenerator};
+#[cfg(not(feature = "std"))]
+use alloc::borrow::Cow;
+#[cfg(feature = "std")]
 use std::borrow::Cow;
+
+use schemars1::{json_schema, JsonSchema, Schema, SchemaGenerator};
 
 impl JsonSchema for Ipv4Net {
     fn schema_name() -> Cow<'static, str> {
